@@ -1,0 +1,37 @@
+﻿@page
+@model SignalRAssignment.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="text-left">
+    <h3 class="display-6">Please Login in here</h3>
+
+    <form method="post" class="w-50 mt-4">
+        <div class="form-group">
+            <label asp-for="Account.UserName"></label>
+            <input asp-for="Account.UserName" class="form-control" />
+            <span asp-validation-for="Account.UserName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Account.Password"></label>
+            <input asp-for="Account.Password" class="form-control" type="password" />
+            <span asp-validation-for="Account.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group my-3">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+
+        <div class="form-group">
+            <a asp-page="/Register">Register</a>
+        </div>
+    </form>
+
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

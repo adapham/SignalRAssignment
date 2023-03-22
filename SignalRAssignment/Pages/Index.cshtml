@@ -1,0 +1,57 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@*<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>*@
+@Html.AntiForgeryToken()
+<h1 class="text-center">Pizzas Menu</h1>
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "d-flex align-items-center justify-content-center" }))
+{
+    <div class="d-flex align-items-center w-50">
+        <input asp-for="@Model.SearchString" class="form-control me-2" placeholder="Search" id="search" />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+}
+
+
+<div class="container">
+    @if (Model.Product.Count > 0)
+    {
+        <h3>All Pizzas</h3>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var item in Model.Product)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="@item.ProductImage" class="card-img-top" alt="Pizza 1">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <h5 class="card-title w-75">@item.ProductName</h5>
+                                <h5 class="card-title">$@item.UnitPrice</h5>
+                            </div>
+                            <p class="card-text">@item.Category.CategoryName</p>
+                            <p class="card-text line-clamp-3" style="height: 48px;">@item.Description</p>
+                            <button data-event-name="addToCart" data-productid="@item.ProductId" class="btn btn-primary">Add to cart</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h5 class="text-center mt-2"> Keyword: @Model.SearchString Not Found </h5>
+    }
+</div>
+
+@section Scripts
+    {
+    <script src="@Url.Content("~/js/cart.js")"></script>
+    }

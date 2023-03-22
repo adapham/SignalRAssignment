@@ -1,0 +1,43 @@
+@page
+@model SignalRAssignment.Pages_Category.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Categories</h1>
+
+<p>
+    <a asp-page="Create">Create New Category</a>
+</p>
+<table class="table table-bordered border-primary">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].Description)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Category)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    <p class="line-clamp-3">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>
+                </td>
+                <td class="table-action">
+                    @await Html.PartialAsync("_TableAction", new ViewDataDictionary(ViewData) { {"id", @item.CategoryId}})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

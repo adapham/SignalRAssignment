@@ -1,0 +1,52 @@
+@page
+@model SignalRAssignment.Pages_Account.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table table-bordered border-primary">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].Type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Account) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+                <td class="table-action">
+                    @await Html.PartialAsync("_TableAction", new ViewDataDictionary(ViewData) { {"id", item.AccountId}})
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

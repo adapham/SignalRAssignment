@@ -1,0 +1,66 @@
+@page
+@model SignalRAssignment.Pages_Product.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Product</h1>
+
+<p>
+    <a asp-page="Create">Create New Product</a>
+</p>
+<table class="table table-bordered border-primary">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].ProductImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].QuantityPerUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].Category.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].Supplier.CompanyName)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Product)
+        {
+            <tr>
+                <td>
+                    <img src="@item.ProductImage" class="card-img-top" alt="@item.ProductImage">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantityPerUnit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.CompanyName)
+                </td>
+                <td class="table-action">
+                    @await Html.PartialAsync("_TableAction", new ViewDataDictionary(ViewData) { {"id", item.ProductId}})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

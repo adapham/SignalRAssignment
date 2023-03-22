@@ -1,0 +1,47 @@
+@page
+@model SignalRAssignment.Pages_Supplier.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Supplier</h1>
+
+<p>
+    <a asp-page="Create">Create New Supplier</a>
+</p>
+<table class="table table-bordered border-primary">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Supplier[0].CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Supplier[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Supplier[0].Phone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Supplier)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td class="table-action">
+                    @await Html.PartialAsync("_TableAction", new ViewDataDictionary(ViewData) { {"id", @item.SupplierId}})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

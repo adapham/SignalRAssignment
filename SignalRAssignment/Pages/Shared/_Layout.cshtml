@@ -1,0 +1,122 @@
+﻿@using SignalRAssignment.Common;
+@using SignalRAssignment.Models;
+@using Microsoft.AspNetCore.Http;
+@{
+    var account = VaSession.Get<Account>(Context.Session, "Account");
+    var cart = VaSession.Get<Cart>(Context.Session, "Cart") ?? new Cart();
+    bool isLogged = false;
+    bool isAdmin = false;
+    if (account != null)
+    {
+        isLogged = true;
+        if (account.Type == 1)
+        {
+            isAdmin = true;
+        }
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SignalRAssignment</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SignalRAssignment.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bg-primary navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">PizzaStore</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+
+                        @if (isLogged)
+                        {
+                            if (isAdmin)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="./Category">Categories</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="./Order">Order</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="./Product">Pizzas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="./Supplier">Supplier</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="./Account">Account</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="./Profile">Profile</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-page="/Index">Pizzas</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-page="/Cart/Index">Cart (<span id="qtyInCart">@cart.Count</span>)</a>
+                    </li>
+                    @if (!isLogged)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-page="/Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-page="/Register">Register</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-page="">(Hi @account.UserName)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-page="/Logout">Logout</a>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - SignalRAssignment - tuyennvhe151053 <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
