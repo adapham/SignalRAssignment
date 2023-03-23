@@ -20,8 +20,13 @@ namespace SignalRAssignment.Pages_Category
         [FromQuery]
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
+        public const int ITEMS_PAGE = 5;
+        [BindProperty(SupportsGet = true, Name = "p")]
+        public int currentPage { get; set; }
+        public int countPages { get; set; }
+        public Func<int?, string> generateUrl { get; set; }
         public async Task OnGetAsync()
-        {          
+        {
             if (_context.Categories != null)
             {
                 if (!string.IsNullOrEmpty(SearchString))
@@ -43,7 +48,15 @@ namespace SignalRAssignment.Pages_Category
                 }
                 else
                 {
+                    int total = await _context.Categories.CountAsync();
+                    countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
+                    if (currentPage < 1)
+                    {
+                        currentPage = 1;
+                    }
                     Category = await _context.Categories
+                        .Skip(ITEMS_PAGE * (currentPage - 1))
+                        .Take(ITEMS_PAGE)
                         .ToListAsync();
                 }
             }

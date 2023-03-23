@@ -12,6 +12,16 @@
         <input asp-for="@Model.SearchString" class="form-control me-2" placeholder="Search" id="search" />
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
+@{
+    var pagingmodel = new Helpers.PagingModel
+            {
+                currentpage = Model.currentPage,
+                countpages = Model.countPages,
+                generateUrl = (int? p) => Url.Page("/Account/Index", new { p = p })
+            };
+}
+<partial name="_pagingXTL" model="@pagingmodel" />
+<h1>Index</h1>
 
 }
 <p>

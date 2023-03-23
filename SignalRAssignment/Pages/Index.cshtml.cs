@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SignalRAssignment.Common;
 using SignalRAssignment.Models;
-
 namespace SignalRAssignment.Pages
 {
     public class IndexModel : PageModel
@@ -33,7 +32,11 @@ namespace SignalRAssignment.Pages
         [FromQuery]
         [BindProperty(SupportsGet = true)]
         public int? cateId { get; set; }
-
+        public const int ITEMS_PAGE = 6;
+        [BindProperty(SupportsGet = true, Name = "p")]
+        public int currentPage { get; set; }
+        public int countPages { get; set; }
+        public Func<int?, string> generateUrl { get; set; }
         public async Task OnGetAsync()
         {
             ////Xu ly category
@@ -44,10 +47,20 @@ namespace SignalRAssignment.Pages
 
             if(cateId != null)
             {
+                int total = await _context.Products
+                    .Where(p => p.CategoryId == cateId)
+                    .CountAsync();
+                countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
+                if (currentPage < 1)
+                {
+                    currentPage = 1;
+                }
                 Product = await _context.Products
                        .Include(p => p.Category)
                        .Include(p => p.Supplier)
                        .Where(p => p.CategoryId == cateId)
+                       .Skip(ITEMS_PAGE * (currentPage - 1))
+                       .Take(ITEMS_PAGE)
                        .ToListAsync();
                 return;
             }
@@ -61,24 +74,23 @@ namespace SignalRAssignment.Pages
                     {
                         var valueSearch = decimal.Parse(SearchString);
 
-                        //Search theo price + proId
+                        //Search theo price+ FromTo
                         if (priceFrom != null && priceTo != null)
                         {
-                            //Search theo ProID
                             Product = await _context.Products
                                   .Include(p => p.Category)
                                   .Include(p => p.Supplier)
-                                  .Where(p => p.UnitPrice == valueSearch || (p.ProductId == (int)valueSearch
-                                    && p.UnitPrice >= priceFrom && p.UnitPrice <= priceTo))
+                                  .Where(p => p.UnitPrice == valueSearch 
+                                    && p.UnitPrice >= priceFrom && p.UnitPrice <= priceTo)
                                   .ToListAsync();
                         }
                         else
                         {
-                            //Search theo ProID
+                            //Search theo Price
                             Product = await _context.Products
                                   .Include(p => p.Category)
                                   .Include(p => p.Supplier)
-                                  .Where(p => p.UnitPrice == valueSearch || p.ProductId == (int)valueSearch)
+                                  .Where(p => p.UnitPrice == valueSearch)
                                   .ToListAsync();
                         }
 
@@ -87,21 +99,42 @@ namespace SignalRAssignment.Pages
                     {
                         if (priceFrom != null && priceTo != null)
                         {
+                            int total = await _context.Products
+                                 .Where(p => p.ProductName.ToLower().Contains(SearchString.ToLower().Trim())
+                                        && p.UnitPrice >= priceFrom && p.UnitPrice <= priceTo)
+                                .CountAsync();
+                            countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
+                            if (currentPage < 1)
+                            {
+                                currentPage = 1;
+                            }
                             //Search theo Product Name + Price
                             Product = await _context.Products
                                    .Include(p => p.Category)
                                    .Include(p => p.Supplier)
                                    .Where(p => p.ProductName.ToLower().Contains(SearchString.ToLower().Trim())
                                         && p.UnitPrice >= priceFrom && p.UnitPrice <= priceTo)
+                                    .Skip(ITEMS_PAGE * (currentPage - 1))
+                                    .Take(ITEMS_PAGE)
                                    .ToListAsync();
                         }
                         else
                         {
                             //Search theo Product Name
+                            int total = await _context.Products
+                                .Where(p => p.ProductName.ToLower().Contains(SearchString.ToLower().Trim()))
+                                .CountAsync();
+                            countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
+                            if (currentPage < 1)
+                            {
+                                currentPage = 1;
+                            }
                             Product = await _context.Products
                                    .Include(p => p.Category)
                                    .Include(p => p.Supplier)
                                    .Where(p => p.ProductName.ToLower().Contains(SearchString.ToLower().Trim()))
+                                    .Skip(ITEMS_PAGE * (currentPage - 1))
+                                    .Take(ITEMS_PAGE)
                                    .ToListAsync();
                         }
                         
@@ -109,9 +142,18 @@ namespace SignalRAssignment.Pages
                 }
                 else
                 {
+                    int total = await _context.Products.CountAsync();
+                    countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
+                    if(currentPage <1)
+                    {
+                        currentPage = 1;
+                    }
+
                     Product = await _context.Products
                         .Include(p => p.Category)
                         .Include(p => p.Supplier)
+                        .Skip(ITEMS_PAGE * (currentPage-1))
+                        .Take(ITEMS_PAGE)
                         .ToListAsync();
                 }
             }
