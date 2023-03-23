@@ -24,6 +24,11 @@ connection.on("LoadSupplier", function () {
     //location.reload();
 });
 
+connection.on("LoadIndex", function () {
+    location.href = '/Index'
+    //location.reload();
+});
+
 
 connection.start().catch(function (err) {
     return console.error(err.toString());
