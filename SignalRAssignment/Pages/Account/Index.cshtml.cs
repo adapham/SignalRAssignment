@@ -53,17 +53,18 @@ namespace SignalRAssignment.Pages_Account
                 {
                     Account = await _context.Accounts
                         .ToListAsync();
+
+                    int total = await _context.Accounts.CountAsync();
+                    countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
+                    if (currentPage < 1)
+                    {
+                        currentPage = 1;
+                    }
+                    Account = await _context.Accounts
+                            .Skip(ITEMS_PAGE * (currentPage - 1))
+                            .Take(ITEMS_PAGE)
+                        .ToListAsync();
                 }
-                int total = await _context.Accounts.CountAsync();
-                countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
-                if (currentPage < 1)
-                {
-                    currentPage = 1;
-                }
-                Account = await _context.Accounts
-                        .Skip(ITEMS_PAGE * (currentPage - 1))
-                        .Take(ITEMS_PAGE)
-                    .ToListAsync();
             }
         }
     }

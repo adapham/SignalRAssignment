@@ -12,6 +12,7 @@
         <input asp-for="@Model.SearchString" class="form-control me-2" placeholder="Search" id="search" />
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
+}
 @{
     var pagingmodel = new Helpers.PagingModel
             {
@@ -19,10 +20,6 @@
                 countpages = Model.countPages,
                 generateUrl = (int? p) => Url.Page("/Supplier/Index", new { p = p })
             };
-}
-<partial name="_pagingXTL" model="@pagingmodel" />
-<h1>Supplier</h1>
-
 }
 <p>
     <a class="btn btn-primary" asp-page="Create">Create New Supplier</a>
@@ -68,3 +65,4 @@
         }
     </tbody>
 </table>
+<partial style="margin-left: 38%" name="_pagingXTL" model="@pagingmodel" />

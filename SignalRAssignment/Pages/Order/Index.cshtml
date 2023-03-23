@@ -65,7 +65,7 @@
                     @Html.DisplayFor(modelItem => item.ShipAddress)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Account.Customer.ContactName)
+                    @Html.DisplayFor(modelItem => item.Account.FullName)
                 </td>
                 <td>
                     <a asp-page="./Details" asp-route-id="@item.OrderId" class="btn btn-info">Details</a>

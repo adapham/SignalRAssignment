@@ -46,7 +46,7 @@ namespace SignalRAssignment.Pages_Supplier
                     catch (Exception)
                     {
                         Supplier = await _context.Suppliers
-                            .Where(s => s.CompanyName.ToLower().Contains(SearchString.ToLower().Trim()) || 
+                            .Where(s => s.CompanyName.ToLower().Contains(SearchString.ToLower().Trim()) ||
                             s.Address.ToLower().Contains(SearchString.ToLower().Trim()))
                             .ToListAsync();
                     }
@@ -56,17 +56,18 @@ namespace SignalRAssignment.Pages_Supplier
                 {
                     Supplier = await _context.Suppliers
                         .ToListAsync();
+
+                    int total = await _context.Suppliers.CountAsync();
+                    countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
+                    if (currentPage < 1)
+                    {
+                        currentPage = 1;
+                    }
+                    Supplier = await _context.Suppliers
+                         .Skip(ITEMS_PAGE * (currentPage - 1))
+                         .Take(ITEMS_PAGE)
+                        .ToListAsync();
                 }
-                int total = await _context.Suppliers.CountAsync();
-                countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
-                if (currentPage < 1)
-                {
-                    currentPage = 1;
-                }
-                Supplier = await _context.Suppliers
-                     .Skip(ITEMS_PAGE * (currentPage - 1))
-                     .Take(ITEMS_PAGE)
-                    .ToListAsync();
             }
         }
     }

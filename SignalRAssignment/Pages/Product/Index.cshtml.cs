@@ -64,19 +64,20 @@ namespace SignalRAssignment.Pages_Product
                         .Include(p => p.Category)
                         .Include(p => p.Supplier)
                         .ToListAsync();
+
+                    int total = await _context.Products.CountAsync();
+                    countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
+                    if (currentPage < 1)
+                    {
+                        currentPage = 1;
+                    }
+                    Product = await _context.Products
+                    .Include(p => p.Category)
+                    .Include(p => p.Supplier)
+                     .Skip(ITEMS_PAGE * (currentPage - 1))
+                     .Take(ITEMS_PAGE)
+                    .ToListAsync();
                 }
-                int total = await _context.Products.CountAsync();
-                countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
-                if (currentPage < 1)
-                {
-                    currentPage = 1;
-                }
-                Product = await _context.Products
-                .Include(p => p.Category)
-                .Include(p => p.Supplier)
-                 .Skip(ITEMS_PAGE * (currentPage - 1))
-                 .Take(ITEMS_PAGE)
-                .ToListAsync();
             }
         }
     }

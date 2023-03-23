@@ -12,15 +12,14 @@
                 generateUrl = (int? p) => Url.Page("/Product/Index", new { p = p })
             };
 }
-<partial name="_pagingXTL" model="@pagingmodel" />
+
 <h1 style="text-align:center">Product</h1>
 @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "d-flex align-items-center justify-content-center" }))
 {
-        <div class="d-flex align-items-center w-50">
-            <input asp-for="@Model.SearchString" class="form-control me-2" placeholder="Search" id="search" />
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-
+    <div class="d-flex align-items-center w-50">
+        <input asp-for="@Model.SearchString" class="form-control me-2" placeholder="Search" id="search" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
 }
 <p>
     <a class="btn btn-primary" asp-page="Create">Create New Product</a>
@@ -87,3 +86,4 @@
         }
     </tbody>
 </table>
+<partial style="margin-left: 38%" name="_pagingXTL" model="@pagingmodel" />
