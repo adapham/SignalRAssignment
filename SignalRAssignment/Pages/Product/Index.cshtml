@@ -5,12 +5,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Product</h1>
+<h1 style="text-align:center">Product</h1>
 
 <p>
-    <a asp-page="Create">Create New Product</a>
+    <a class="btn btn-primary" asp-page="Create">Create New Product</a>
 </p>
-<table class="table table-bordered border-primary">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -31,7 +31,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Product[0].Supplier.CompanyName)
             </th>
-            <th>Action</th>
+            <th>
+                Action
+            </th>
         </tr>
     </thead>
     <tbody>
