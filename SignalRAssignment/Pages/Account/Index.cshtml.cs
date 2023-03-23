@@ -19,12 +19,25 @@ namespace SignalRAssignment.Pages_Account
         }
 
         public IList<Account> Account { get;set; } = default!;
-
+        public const int ITEMS_PAGE = 5;
+        [BindProperty(SupportsGet = true, Name = "p")]
+        public int currentPage { get; set; }
+        public int countPages { get; set; }
+        public Func<int?, string> generateUrl { get; set; }
         public async Task OnGetAsync()
         {
             if (_context.Accounts != null)
             {
-                Account = await _context.Accounts.ToListAsync();
+                int total = await _context.Accounts.CountAsync();
+                countPages = (int)Math.Ceiling((double)total / ITEMS_PAGE);
+                if (currentPage < 1)
+                {
+                    currentPage = 1;
+                }
+                Account = await _context.Accounts
+                        .Skip(ITEMS_PAGE * (currentPage - 1))
+                        .Take(ITEMS_PAGE)
+                    .ToListAsync();
             }
         }
     }

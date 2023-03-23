@@ -4,7 +4,15 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@{
+    var pagingmodel = new Helpers.PagingModel
+            {
+                currentpage = Model.currentPage,
+                countpages = Model.countPages,
+                generateUrl = (int? p) => Url.Page("/Category/Index", new { p = p })
+            };
+}
+<partial name="_pagingXTL" model="@pagingmodel" />
 <h1 style="text-align: center">Categories</h1>
 @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "d-flex align-items-center justify-content-center" }))
 {

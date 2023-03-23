@@ -4,7 +4,15 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@{
+    var pagingmodel = new Helpers.PagingModel
+            {
+                currentpage = Model.currentPage,
+                countpages = Model.countPages,
+                generateUrl = (int? p) => Url.Page("/Supplier/Index", new { p = p })
+            };
+}
+<partial name="_pagingXTL" model="@pagingmodel" />
 <h1>Supplier</h1>
 
 <p>
