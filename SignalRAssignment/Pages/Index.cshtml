@@ -1,26 +1,59 @@
-@page
+﻿@page
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
+@{
+    var pagingmodel = new Helpers.PagingModel
+            {
+                currentpage = Model.currentPage,
+                countpages = Model.countPages,
+                generateUrl = (int? p) => Url.Page("./Index",new {p = p})
+            };
+            Console.WriteLine(pagingmodel.currentpage);
+}
+@Url.Page("/Index",new{p =5})
+@using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "d-flex align-items-center justify-content-center" }))
+{
+    <partial name="_pagingXTL" model="@pagingmodel" />
 
+}
 @*<div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>*@
 @Html.AntiForgeryToken()
 <h1 class="text-center">Pizzas Menu</h1>
-
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="https://img.pikbest.com/origin/06/05/41/016pIkbEsTIb9.jpg!w700wp" class="d-block w-100" alt="..." width="100" height="750">
+        </div>
+        <div class="carousel-item">
+            <img src="https://img.pikbest.com/origin/05/90/43/23JpIkbEsTrs2.jpg!bwr800" class="d-block w-100" alt="..." width="100" height="750">
+        </div>
+        <div class="carousel-item">
+            <img src="https://i.pinimg.com/736x/f3/36/b0/f336b04c11e6545621354532cc503a7b.jpg" class="d-block w-100" alt="..." width="100" height="750">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<br />
 @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "d-flex align-items-center justify-content-center" }))
 {
     <div class="d-flex align-items-center w-50">
         <input asp-for="@Model.SearchString" class="form-control me-2" placeholder="Search" id="search" />
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
-
+    
 }
-
-
 <div class="container">
     @if (Model.Product.Count > 0)
     {
@@ -50,6 +83,13 @@
         <h5 class="text-center mt-2"> Keyword: @Model.SearchString Not Found </h5>
     }
 </div>
+@* 
+    Model:
+      - currentPage:int - Trang hiện tại
+      - countPages:int - tổng số trang
+      - generateUrl:delegate Func<int?, string> trả về URL tương ứng với trang p (1,2,3 ...)
+*@
+
 
 @section Scripts
     {
