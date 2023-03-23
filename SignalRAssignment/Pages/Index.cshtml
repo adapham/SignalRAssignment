@@ -13,7 +13,7 @@
                 generateUrl = (int? p) => Url.Page("./Index",new {p = p})
             };
 }
-    <partial name="_pagingXTL" model="@pagingmodel" />
+    
 @*<div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
@@ -118,6 +118,9 @@
             {
                 <h5 class="text-center mt-2"> Keyword: @Model.SearchString Not Found </h5>
             }
+
+            <br />
+            <partial name="_pagingXTL" model="@pagingmodel" />
         </div>
     </div>
 </div>
