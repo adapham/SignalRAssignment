@@ -28,7 +28,8 @@ namespace SignalRAssignment.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("SqlServerConnection"));
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("server=localhost; database = PizzaStore;Integrated security=true;TrustServerCertificate=true;uid=sa;pwd=123456;");
             }
         }
 
@@ -62,7 +63,11 @@ namespace SignalRAssignment.Models
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+                entity.HasKey(e => e.AccountId);
+
+                entity.Property(e => e.AccountId)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("AccountID");
 
                 entity.Property(e => e.Address).HasMaxLength(255);
 
@@ -77,13 +82,19 @@ namespace SignalRAssignment.Models
                 entity.Property(e => e.Phone)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.Account)
+                    .WithOne(p => p.Customer)
+                    .HasForeignKey<Customer>(d => d.AccountId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Customers_Account");
             });
 
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
-                entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+                entity.Property(e => e.AccountId).HasColumnName("AccountID");
 
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
@@ -93,29 +104,29 @@ namespace SignalRAssignment.Models
 
                 entity.Property(e => e.ShippedDate).HasColumnType("datetime");
 
-                entity.HasOne(d => d.Customer)
+                entity.HasOne(d => d.Account)
                     .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.CustomerId)
+                    .HasForeignKey(d => d.AccountId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Orders_Customers");
+                    .HasConstraintName("FK_Orders_Account");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.OrderId, e.ProductId });
 
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
                 entity.HasOne(d => d.Order)
-                    .WithMany()
+                    .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_Order");
 
                 entity.HasOne(d => d.Product)
-                    .WithMany()
+                    .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_Product");
@@ -127,6 +138,8 @@ namespace SignalRAssignment.Models
 
                 entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
 
+                entity.Property(e => e.Description).HasMaxLength(500);
+
                 entity.Property(e => e.ProductImage)
                     .HasMaxLength(1024)
                     .IsUnicode(false);
@@ -137,19 +150,17 @@ namespace SignalRAssignment.Models
 
                 entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 0)");
 
-                entity.Property(e => e.Description).HasMaxLength(255);
-
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Products__Catego__4222D4EF");
+                    .HasConstraintName("FK__Products__Catego__5812160E");
 
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.SupplierId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Products__Suppli__412EB0B6");
+                    .HasConstraintName("FK__Products__Suppli__59063A47");
             });
 
             modelBuilder.Entity<Supplier>(entity =>

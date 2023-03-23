@@ -27,7 +27,7 @@
                 @Html.DisplayNameFor(model => model.Order[0].ShipAddress)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].Customer)
+                @Html.DisplayNameFor(model => model.Order[0].Account)
             </th>
             <th></th>
         </tr>
@@ -51,7 +51,7 @@
                 @Html.DisplayFor(modelItem => item.ShipAddress)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.ContactName)
+                @Html.DisplayFor(modelItem => item.Account.Customer.ContactName)
             </td>
             <td>
                 <a asp-page="./Details" asp-route-id="@item.OrderId" class="btn btn-outline-primary">Details</a>
