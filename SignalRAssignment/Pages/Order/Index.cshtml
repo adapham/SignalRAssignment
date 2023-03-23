@@ -5,10 +5,10 @@
     ViewData["Title"] = "Order";
 }
 
-<h1>Order</h1>
+<h1 style="text-align:center">Order</h1>
 
 
-<table class="table table-bordered border-primary">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -54,7 +54,7 @@
                 @Html.DisplayFor(modelItem => item.Customer.ContactName)
             </td>
             <td>
-                <a asp-page="./Details" asp-route-id="@item.OrderId" class="btn btn-outline-primary">Details</a>
+                    <a asp-page="./Details" asp-route-id="@item.OrderId" class="btn btn-info">Details</a>
             </td>
         </tr>
 }

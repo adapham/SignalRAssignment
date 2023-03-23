@@ -5,14 +5,25 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Categories</h1>
+<h1 style="text-align: center">Categories</h1>
+@using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "d-flex align-items-center justify-content-center" }))
+{
+    <div class="d-flex align-items-center w-50">
+        <input asp-for="@Model.SearchString" class="form-control me-2" placeholder="Search" id="search" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
 
+}
 <p>
-    <a asp-page="Create">Create New Category</a>
+    <a class="btn btn-primary" asp-page="Create">Create new category</a>
 </p>
-<table class="table table-bordered border-primary">
+
+<table class="table table-striped">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category[0].CategoryId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Category[0].CategoryName)
             </th>
@@ -26,6 +37,9 @@
         @foreach (var item in Model.Category)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryId)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CategoryName)
                 </td>
