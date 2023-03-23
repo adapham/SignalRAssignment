@@ -18,6 +18,7 @@ namespace SignalRAssignment.Purchase
         public IList<Order> Order { get; set; } = default!;
         public List<Purchase> purchases { get; set; } = default!;
         public List<Product> products { get; set; } = default!;
+        
         Dictionary<int,String> pairs = new Dictionary<int, String>();
 
         public async Task OnGetAsync()
@@ -35,16 +36,6 @@ namespace SignalRAssignment.Purchase
 
                 List<OrderDetail> orderDetail = _context.OrderDetails
                      .Where(x => x.OrderId == order.OrderId).ToList();
-              
-                foreach (var o in orderDetail)
-                {
-                    List<Product> product = await _context.Products
-                               .Include(o => o.OrderDetails)
-                               .Where(p => p.ProductId==o.ProductId)
-                               .ToListAsync();
-                    products.AddRange(product);
-                }
-                    
                 foreach (var o in orderDetail)
                 {
 
