@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +10,7 @@ using SignalRAssignment.Models;
 
 namespace SignalRAssignment.Purchase
 {
+    [MemberPermission]
     public class IndexModel : PageModel
     {
         private readonly PizzaStoreContext _context;
@@ -18,7 +23,7 @@ namespace SignalRAssignment.Purchase
         public IList<Order> Order { get; set; } = default!;
         public List<Purchase> purchases { get; set; } = default!;
         public List<Product> products { get; set; } = default!;
-        
+
         Dictionary<int,String> pairs = new Dictionary<int, String>();
 
         public async Task OnGetAsync()
@@ -37,7 +42,7 @@ namespace SignalRAssignment.Purchase
                 List<OrderDetail> orderDetail = _context.OrderDetails
                      .Where(x => x.OrderId == order.OrderId).ToList();
                 foreach (var o in orderDetail)
-                {
+            {
 
                     //pairs.Add(o.OrderId,)
 
@@ -53,13 +58,13 @@ namespace SignalRAssignment.Purchase
 
             }
 
-        }
+            }
         public class Purchase{
             public int OrderId { get; set;}
             public DateTime OrderDate { get; set;}
             public DateTime ShippedDate { get; set;}
             public string ProductImage { get; set;}
-            }
+        }
     }
    
    
