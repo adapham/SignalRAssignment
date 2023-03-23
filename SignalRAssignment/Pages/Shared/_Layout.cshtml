@@ -24,12 +24,21 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SignalRAssignment.styles.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background-image: url('https://hospitalityinsights.ehl.edu/hubfs/Blog-EHL-Insights/Blog-Header-EHL-Insights/AdobeStock_264542845.jpeg');
+            background-size: contain;
+            background-size: auto;
+            /*background-position: center;*/
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bg-primary navbar-dark">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bg-info navbar-dark">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">PizzaStore</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Food Store</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -101,16 +110,14 @@
 
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container" style="background-color: #f1f1f1; min-height: 400px;">
+        <main role="main" class="">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - SignalRAssignment - tuyennvhe151053 <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+    <footer class="border-top footer text-muted bg-info bg-gradient">
+        <div class="container text-center text-white fw-bold">Food Managerment</div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
