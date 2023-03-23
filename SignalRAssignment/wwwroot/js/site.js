@@ -1,4 +1,30 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿"use strict";
 
-// Write your JavaScript code.
+var connection = new signalR.HubConnectionBuilder()
+    .withUrl("/foodStoreHub")
+    .build();
+
+connection.on("LoadCategory", function () {
+    location.href = '/Category/Index'
+    //location.reload();
+});
+
+connection.on("LoadProduct", function () {
+    location.href = '/Product/Index'
+    //location.reload();
+});
+
+connection.on("LoadAccount", function () {
+    location.href = '/Account/Index'
+    //location.reload();
+});
+
+connection.on("LoadSupplier", function () {
+    location.href = '/Supplier/Index'
+    //location.reload();
+});
+
+
+connection.start().catch(function (err) {
+    return console.error(err.toString());
+});
