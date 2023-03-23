@@ -32,7 +32,11 @@ namespace SignalRAssignment.Pages
         [FromQuery]
         [BindProperty(SupportsGet = true)]
         public int? cateId { get; set; }
-
+        public const int ITEMS_PAGE = 1;
+        [BindProperty(SupportsGet = true, Name = "p")]
+        public int currentPage { get; set; }
+        public int countPages { get; set; }
+        public Func<int?, string> generateUrl { get; set; }
         public async Task OnGetAsync()
         {
             ////Xu ly category

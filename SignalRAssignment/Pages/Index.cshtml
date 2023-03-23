@@ -12,9 +12,7 @@
                 countpages = Model.countPages,
                 generateUrl = (int? p) => Url.Page("./Index",new {p = p})
             };
-            Console.WriteLine(pagingmodel.currentpage);
 }
-@Url.Page("/Index",new{p =5})
 @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "d-flex align-items-center justify-content-center" }))
 {
     <partial name="_pagingXTL" model="@pagingmodel" />
