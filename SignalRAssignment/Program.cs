@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Q2.Hubs;
 using SignalRAssignment.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<PizzaStoreContext>();
+builder.Services.AddSignalR();
 
 builder.Services.AddDistributedMemoryCache();
 
@@ -38,6 +40,6 @@ app.UseRouting();
 app.UseSession();
 
 app.MapRazorPages();
-
+app.MapHub<FoodStoreHub>("/foodStoreHub");
 
 app.Run();

@@ -58,7 +58,7 @@
                                     <a class="nav-link text-white" asp-area="" asp-page="/Order/Index">Order</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-page="/Product/Index">Stores</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Product/Index">Product</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" asp-area="" asp-page="/Supplier/Index">Supplier</a>
@@ -81,12 +81,12 @@
                                 </li>
                             }
                         }
-                        else
+                        @*else
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-page="/Index">Stores</a>
                             </li>
-                        }
+                        }*@
 
                     </ul>
                 </div>
@@ -129,6 +129,8 @@
         <div class="container text-center text-white fw-bold">Food Managerment</div>
     </footer>
 
+    <script src="~/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/signalr/dist/browser/signalr.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

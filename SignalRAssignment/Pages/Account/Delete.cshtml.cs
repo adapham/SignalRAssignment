@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Q2.Hubs;
 using SignalRAssignment.Models;
 
 namespace SignalRAssignment.Pages_Account
@@ -12,10 +14,11 @@ namespace SignalRAssignment.Pages_Account
     public class DeleteModel : PageModel
     {
         private readonly SignalRAssignment.Models.PizzaStoreContext _context;
-
-        public DeleteModel(SignalRAssignment.Models.PizzaStoreContext context)
+        private readonly IHubContext<FoodStoreHub> foodStoreHub;
+        public DeleteModel(SignalRAssignment.Models.PizzaStoreContext context, IHubContext<FoodStoreHub> foodStoreHub)
         {
             _context = context;
+            this.foodStoreHub = foodStoreHub;
         }
 
         [BindProperty]
@@ -54,6 +57,8 @@ namespace SignalRAssignment.Pages_Account
                 Account = account;
                 _context.Accounts.Remove(Account);
                 await _context.SaveChangesAsync();
+
+                await foodStoreHub.Clients.All.SendAsync("LoadAccount");
             }
 
             return RedirectToPage("./Index");
