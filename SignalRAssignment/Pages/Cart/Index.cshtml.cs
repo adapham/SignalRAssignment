@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SignalRAssignment.Common;
 using Microsoft.AspNetCore.Http;
 using SignalRAssignment.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SignalRAssignment.Pages.Cart
 {
@@ -54,11 +55,8 @@ namespace SignalRAssignment.Pages.Cart
         public void OnGet(int id, string handler)
         {
             cartCRUD = new CartCRUD(_context, HttpContext.Session);
-            items= (List<CartItem>)cartCRUD.GetCart().CartItems;
-
             bool isLogged = false;
             Console.WriteLine(value: "Size: "+cartCRUD.GetCart().CartItems.Count);
-            Console.WriteLine(value:"items: "+ items.Count );
             ViewData["listItem"] = cartCRUD.GetCart().CartItems;
             ViewData["count"] = cartCRUD.GetCart().Count;
             ViewData["Cart"] = cartCRUD.GetCart();
@@ -95,29 +93,34 @@ namespace SignalRAssignment.Pages.Cart
         /// This method is used to process the order.
         /// </summary>
        
-        public IActionResult OnPost(Models.Order order, String idUseName)
+        public IActionResult OnPost(Models.Order order)
         {
-
-            order.OrderDate = DateTime.Now;
-            var account = VaSession.Get<Models.Account>(HttpContext.Session, "Account");
-            order.CustomerId = account.AccountId;
-            Console.WriteLine(value: "POst: "+items.Count);
-            foreach (var product in items)
-            {
-
-                var orderDetail = new OrderDetail()
-                {
-                    UnitPrice= (double)product.Product.UnitPrice,
-                    Order = order,
-                    Quantity = product.Quantity,
-
-                };
-                _context.OrderDetails.Add(orderDetail);
-            }
             try
             {
-                _context.Add(order);
-                _context.SaveChanges();
+                cartCRUD = new CartCRUD(_context, HttpContext.Session);
+            order.OrderDate = DateTime.Now;
+            var account = VaSession.Get<Models.Account>(HttpContext.Session, "Account");
+            order.AccountId = account.AccountId;
+                using (var context = new PizzaStoreContext())
+                {
+                    context.Add(order);
+
+                    foreach (var product in cartCRUD.GetCartItems())
+                    {
+                        var orderDetail = new OrderDetail()
+                        {
+                            Order = order,
+                            UnitPrice = (double)product.Product.UnitPrice,
+                            OrderId = order.OrderId,
+                            Quantity = product.Quantity,
+                            ProductId= product.Product.ProductId
+                            
+                        };
+                        context.OrderDetails.Add(orderDetail);
+                    }
+                    context.SaveChanges();
+                }
+                cartCRUD.ClearCart();
                 return RedirectToPage("/Index");
             }
             catch (Exception e)

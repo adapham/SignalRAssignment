@@ -27,7 +27,7 @@ namespace SignalRAssignment.Pages_Order
             if (_context.Orders != null)
             {
                 Order = await _context.Orders
-                .Include(o => o.Customer).ToListAsync();
+                .Include(o => o.Account).ToListAsync();
             }
         }
     }

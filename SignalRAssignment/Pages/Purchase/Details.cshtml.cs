@@ -8,14 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using SignalRAssignment.Common;
 using SignalRAssignment.Models;
 
-namespace SignalRAssignment.Pages_Order
+namespace SignalRAssignment.Purchase
 {
-    [StaffPermission]
-    public class DetailsModel : PageModel
+    public class OrderDetailsModel : PageModel
     {
         private readonly PizzaStoreContext _context;
 
-        public DetailsModel(PizzaStoreContext context)
+        public OrderDetailsModel(PizzaStoreContext context)
         {
             _context = context;
         }

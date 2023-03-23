@@ -5,10 +5,10 @@
     ViewData["Title"] = "Order";
 }
 
-<h1>Order</h1>
+<h1 style="text-align:center">Order</h1>
 
 
-<table class="table table-bordered border-primary">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -27,7 +27,7 @@
                 @Html.DisplayNameFor(model => model.Order[0].ShipAddress)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].Customer)
+                @Html.DisplayNameFor(model => model.Order[0].Account)
             </th>
             <th></th>
         </tr>
@@ -51,10 +51,10 @@
                 @Html.DisplayFor(modelItem => item.ShipAddress)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customer.ContactName)
+                @Html.DisplayFor(modelItem => item.Account.Customer.ContactName)
             </td>
             <td>
-                <a asp-page="./Details" asp-route-id="@item.OrderId" class="btn btn-outline-primary">Details</a>
+                    <a asp-page="./Details" asp-route-id="@item.OrderId" class="btn btn-info">Details</a>
             </td>
         </tr>
 }
