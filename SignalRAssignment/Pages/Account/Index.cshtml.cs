@@ -18,13 +18,37 @@ namespace SignalRAssignment.Pages_Account
             _context = context;
         }
 
-        public IList<Account> Account { get;set; } = default!;
-
+        public IList<Account> Account { get; set; } = default!;
+        [FromQuery]
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
         public async Task OnGetAsync()
         {
             if (_context.Accounts != null)
             {
-                Account = await _context.Accounts.ToListAsync();
+                if (!string.IsNullOrEmpty(SearchString))
+                {
+                    try
+                    {
+                        var value = Decimal.Parse(SearchString);
+                        Account = await _context.Accounts
+                              .Where(a => a.Type == (int)value)
+                              .ToListAsync();
+                    }
+                    catch (Exception)
+                    {
+                        Account = await _context.Accounts
+                               .Where(a => a.UserName.ToLower().Contains(SearchString.ToLower().Trim()) ||
+                               a.FullName.ToLower().Contains(SearchString.ToLower().Trim()))
+                               .ToListAsync();
+                    }
+
+                }
+                else
+                {
+                    Account = await _context.Accounts
+                        .ToListAsync();
+                }
             }
         }
     }

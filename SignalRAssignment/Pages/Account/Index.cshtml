@@ -5,14 +5,24 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 style="text-align:center">Account</h1>
+@using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "d-flex align-items-center justify-content-center" }))
+{
+    <div class="d-flex align-items-center w-50">
+        <input asp-for="@Model.SearchString" class="form-control me-2" placeholder="Search" id="search" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
 
+}
 <p>
-    <a asp-page="Create">Create New</a>
+    <a class="btn btn-primary" asp-page="Create">Create New Account</a>
 </p>
-<table class="table table-bordered border-primary">
+<table class="table table-striped">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].AccountId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Account[0].UserName)
             </th>
@@ -29,24 +39,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Account) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
+        @foreach (var item in Model.Account)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
                 <td class="table-action">
                     @await Html.PartialAsync("_TableAction", new ViewDataDictionary(ViewData) { {"id", item.AccountId}})
                 </td>
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>

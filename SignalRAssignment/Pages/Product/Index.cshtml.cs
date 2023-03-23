@@ -11,7 +11,7 @@ using SignalRAssignment.Models;
 
 namespace SignalRAssignment.Pages_Product
 {
-    
+
     [StaffPermission]
     public class IndexModel : PageModel
     {
@@ -22,16 +22,43 @@ namespace SignalRAssignment.Pages_Product
             _context = context;
         }
 
-        public IList<Product> Product { get;set; } = default!;
+        public IList<Product> Product { get; set; } = default!;
 
-        
+        [FromQuery]
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
         public async Task OnGetAsync()
         {
             if (_context.Products != null)
             {
-                Product = await _context.Products
-                .Include(p => p.Category)
-                .Include(p => p.Supplier).ToListAsync();
+                if (!string.IsNullOrEmpty(SearchString))
+                {
+                    try
+                    {
+                        var value = Decimal.Parse(SearchString);
+                        Product = await _context.Products
+                            .Include(p => p.Category)
+                            .Include(p => p.Supplier)
+                            .Where(p => p.UnitPrice == value || p.ProductId == (int)value)
+                            .ToListAsync();
+                    }
+                    catch (Exception)
+                    {
+                        Product = await _context.Products
+                            .Include(p => p.Category)
+                            .Include(p => p.Supplier)
+                            .Where(p => p.ProductName.ToLower().Contains(SearchString.ToLower().Trim()))
+                            .ToListAsync();
+                    }
+
+                }
+                else
+                {
+                    Product = await _context.Products
+                        .Include(p => p.Category)
+                        .Include(p => p.Supplier)
+                        .ToListAsync();
+                }
             }
         }
     }

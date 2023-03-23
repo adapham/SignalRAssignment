@@ -22,11 +22,36 @@ namespace SignalRAssignment.Pages_Supplier
 
         public IList<Supplier> Supplier { get;set; } = default!;
 
+        [FromQuery]
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
         public async Task OnGetAsync()
         {
             if (_context.Suppliers != null)
             {
-                Supplier = await _context.Suppliers.ToListAsync();
+                if (!string.IsNullOrEmpty(SearchString))
+                {
+                    try
+                    {
+                        var value = Decimal.Parse(SearchString);
+                        Supplier = await _context.Suppliers
+                            .Where(s => s.SupplierId == (int)value)
+                            .ToListAsync();
+                    }
+                    catch (Exception)
+                    {
+                        Supplier = await _context.Suppliers
+                            .Where(s => s.CompanyName.ToLower().Contains(SearchString.ToLower().Trim()) || 
+                            s.Address.ToLower().Contains(SearchString.ToLower().Trim()))
+                            .ToListAsync();
+                    }
+
+                }
+                else
+                {
+                    Supplier = await _context.Suppliers
+                        .ToListAsync();
+                }
             }
         }
     }
