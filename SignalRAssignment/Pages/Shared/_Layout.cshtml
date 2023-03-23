@@ -36,7 +36,8 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 bg-info navbar-dark">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow mb-3 navbar-dark"
+             style="background: linear-gradient(to right, #ffffff, #ff565a, #c36e37, #f4e2ee);">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Food Store</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -51,32 +52,35 @@
                             if (isAdmin)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="./Category">Categories</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Category/Index">Categories</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="./Order">Order</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Order/Index">Order</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="./Product">Pizzas</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Product/Index">Stores</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="./Supplier">Supplier</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Supplier/Index">Supplier</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="./Account">Account</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Account/Index">Account</a>
                                 </li>
                             }
                             else
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="./Profile">Profile</a>
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Profile/Index">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-page="/Purchase/Index">Purchase</a>
                                 </li>
                             }
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-page="/Index">Pizzas</a>
+                                <a class="nav-link text-white" asp-page="/Index">Stores</a>
                             </li>
                         }
 
@@ -116,7 +120,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-info bg-gradient">
+    <footer class="footer text-muted"
+            style="background: linear-gradient(to right, #ffffff, #ff565a, #c36e37, #f4e2ee);">
         <div class="container text-center text-white fw-bold">Food Managerment</div>
     </footer>
 
