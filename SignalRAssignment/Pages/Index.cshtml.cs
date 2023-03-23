@@ -32,7 +32,7 @@ namespace SignalRAssignment.Pages
         [FromQuery]
         [BindProperty(SupportsGet = true)]
         public int? cateId { get; set; }
-        public const int ITEMS_PAGE = 1;
+        public const int ITEMS_PAGE = 6;
         [BindProperty(SupportsGet = true, Name = "p")]
         public int currentPage { get; set; }
         public int countPages { get; set; }

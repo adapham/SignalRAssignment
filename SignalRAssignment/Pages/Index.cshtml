@@ -13,11 +13,7 @@
                 generateUrl = (int? p) => Url.Page("./Index",new {p = p})
             };
 }
-@using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "d-flex align-items-center justify-content-center" }))
-{
     <partial name="_pagingXTL" model="@pagingmodel" />
-
-}
 @*<div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
