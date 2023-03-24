@@ -10,35 +10,24 @@
 <div>
     <h4>Order</h4>
     <hr />
-    <dl class="row" style="border: 1px solid black; width: 45%">
-        <dt class="col-sm-6">
-            @Html.DisplayNameFor(model => model.Order.OrderDate)
-        </dt>
-        <dd class="col-sm-6">
-            @Html.DisplayFor(model => model.Order.OrderDate)
-        </dd>
-        
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Order.ShippedDate)
-        </dt>
-        <dd class="col-sm-6">
-            @Html.DisplayFor(model => model.Order.ShippedDate)
-        </dd>
-        <dt class="col-sm-6">
-            @Html.DisplayNameFor(model => model.Order.Freight)
-        </dt>
-        <dd class="col-sm-6">
-            @Html.DisplayFor(model => model.Order.Freight)
-        </dd>
-        <dt class="col-sm-6">
-            @Html.DisplayNameFor(model => model.Order.ShipAddress)
-        </dt>
-        <dd class="col-sm-6">
-            @Html.DisplayFor(model => model.Order.ShipAddress)
-        </dd>
-       
-    </dl>
-
+    <table class="table table-striped" style="width: 45%">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Order.OrderDate)</td>
+            <td>@Html.DisplayFor(model => model.Order.OrderDate)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Order.ShippedDate)</td>
+            <td>@Html.DisplayFor(model => model.Order.ShippedDate)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Order.Freight)</td>
+            <td>@Html.DisplayFor(model => model.Order.Freight)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Order.ShipAddress)</td>
+            <td>@Html.DisplayFor(model => model.Order.ShipAddress)</td>
+        </tr>
+    </table>
     <h4>Order Details</h4>
     <hr />
     <table class="table table-striped">

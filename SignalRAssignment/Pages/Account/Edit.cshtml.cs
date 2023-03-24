@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Q2.Hubs;
 using SignalRAssignment.Models;
 
 namespace SignalRAssignment.Pages_Account
@@ -13,10 +15,11 @@ namespace SignalRAssignment.Pages_Account
     public class EditModel : PageModel
     {
         private readonly SignalRAssignment.Models.PizzaStoreContext _context;
-
-        public EditModel(SignalRAssignment.Models.PizzaStoreContext context)
+        private readonly IHubContext<FoodStoreHub> foodStoreHub;
+        public EditModel(SignalRAssignment.Models.PizzaStoreContext context, IHubContext<FoodStoreHub> foodStoreHub)
         {
             _context = context;
+            this.foodStoreHub = foodStoreHub;   
         }
 
         [BindProperty]
@@ -52,6 +55,8 @@ namespace SignalRAssignment.Pages_Account
             try
             {
                 await _context.SaveChangesAsync();
+
+                await foodStoreHub.Clients.All.SendAsync("LoadAccount");
             }
             catch (DbUpdateConcurrencyException)
             {

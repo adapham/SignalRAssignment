@@ -11,27 +11,20 @@
 <div>
     <h4>Supplier</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Supplier.CompanyName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Supplier.CompanyName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Supplier.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Supplier.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Supplier.Phone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Supplier.Phone)
-        </dd>
-    </dl>
-    
+    <table class="table table-striped" style="width: 45%">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Supplier.CompanyName)</td>
+            <td>@Html.DisplayFor(model => model.Supplier.CompanyName)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Supplier.Address)</td>
+            <td>@Html.DisplayFor(model => model.Supplier.Address)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Supplier.Products)</td>
+            <td>@Html.DisplayFor(model => model.Supplier.Phone)</td>
+        </tr>
+    </table>
     <form method="post">
         <input type="hidden" asp-for="Supplier.SupplierId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
