@@ -22,5 +22,6 @@ namespace SignalRAssignment.Models
         public virtual Account Account { get; set; } = null!;
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         
+        
     }
 }

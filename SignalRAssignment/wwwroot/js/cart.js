@@ -2,7 +2,7 @@ $(document).ready(function () {
     $('button[data-event-name="addToCart"]').click(function () {
         let productId = $(this).data('productid'),
             quantity = 1,
-            data = {
+            data = {    
                 productId: productId,   
                 quantity: quantity,
                 action: 'add'
@@ -13,10 +13,6 @@ $(document).ready(function () {
             data: JSON.stringify(data),
             contentType: "application/json",
             dataType: "json",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("XSRF-TOKEN",
-                    $('input:hidden[name="__RequestVerificationToken"]').val());
-            },
             success: function (data) {
                 if (data.success) {
                     $('#qtyInCart').text(data.totalQty);

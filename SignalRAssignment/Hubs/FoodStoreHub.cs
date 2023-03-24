@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace Q2.Hubs
+namespace SignalRAssignment .Hubs
 {
     public class FoodStoreHub : Hub
     {
