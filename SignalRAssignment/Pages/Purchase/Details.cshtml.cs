@@ -38,7 +38,10 @@ namespace SignalRAssignment.Purchase
             else 
             {
                 Order = order;
-                OrderDetail = await _context.OrderDetails.Where(o => o.OrderId == id).Include(o => o.Product).ToListAsync();
+                OrderDetail = await _context.OrderDetails
+                    .Where(o => o.OrderId == id)
+                    .Include(o => o.Product)
+                    .ToListAsync();
             }
             return Page();
         }

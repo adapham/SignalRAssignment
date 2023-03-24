@@ -10,42 +10,27 @@
 <div>
     <h4>Order</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Order.OrderDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Order.OrderDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Order.RequiredDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Order.RequiredDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Order.ShippedDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Order.ShippedDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Order.Freight)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Order.Freight)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Order.ShipAddress)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Order.ShipAddress)
-        </dd>
-    </dl>
-
+    <table class="table table-striped" style="width: 45%">
+        <tr>
+            <td style="font-weight: bold">@Html.DisplayNameFor(model => model.Order.OrderDate):</td>
+            <td>@Html.DisplayFor(model => model.Order.OrderDate)</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">@Html.DisplayNameFor(model => model.Order.ShippedDate):</td>
+            <td>@Html.DisplayFor(model => model.Order.ShippedDate)</td>
+        </tr>
+        <tr>
+            <td style ="font-weight: bold">@Html.DisplayNameFor(model => model.Order.Freight):</td>
+            <td>@Html.DisplayFor(model => model.Order.Freight)</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">@Html.DisplayNameFor(model => model.Order.ShipAddress):</td>
+            <td>@Html.DisplayFor(model => model.Order.ShipAddress)</td>
+        </tr>
+    </table>
     <h4>Order Details</h4>
     <hr />
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>
@@ -54,8 +39,11 @@
                 <th>
                     Quantity
                 </th>
-                 <th>
+                <th>
                     Unit Price
+                </th>
+                <th>
+                    Image
                 </th>
                 <th>
                     Total
@@ -63,23 +51,26 @@
             </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model.OrderDetail)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.ProductName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UnitPrice)
-                </td>
-                <td>
-                    @CaculateTotal(item.Quantity,item.UnitPrice)
-                </td>
-            </tr>
-        }
+            @foreach (var item in Model.OrderDetail)
+            {
+                <tr>
+                    <td style="padding-top: 45px">
+                        @Html.DisplayFor(modelItem => item.Product.ProductName)
+                    </td>
+                    <td style="padding-top: 45px">
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td style="padding-top: 45px">
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td>
+                        <img width="100" height="100" src="@Html.DisplayFor(modelItem => item.Product.ProductImage)" alt="">
+                    </td>
+                    <td style="padding-top: 45px">
+                        @CaculateTotal(item.Quantity,item.UnitPrice)
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
     <div class="text-end">
@@ -88,7 +79,7 @@
     </div>
 </div>
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a class="btn btn-primary" asp-page="./Index" style="margin-bottom: 10px">Back to List</a>
 </div>
 
 @functions {
@@ -98,5 +89,5 @@
         Total += unitPrice * quantity;
         return unitPrice * quantity;
     }
-   
+
 }

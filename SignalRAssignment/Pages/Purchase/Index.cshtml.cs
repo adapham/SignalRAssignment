@@ -21,49 +21,17 @@ namespace SignalRAssignment.Purchase
         }
 
         public IList<Order> Order { get; set; } = default!;
-        public List<Purchase> purchases { get; set; } = default!;
-        public List<Product> products { get; set; } = default!;
-
-        Dictionary<int,String> pairs = new Dictionary<int, String>();
 
         public async Task OnGetAsync()
         {
+            var account = VaSession.Get<Models.Account>(HttpContext.Session, "Account");
             if (_context.Orders != null)
             {
                 Order = await _context.Orders
                     .Include(i => i.OrderDetails)
-                    .Include(o => o.Account)
+                    .Where(x=>x.AccountId== account.AccountId)
                     .ToListAsync();
-
             }
-            foreach (var order in Order)
-            {
-
-                List<OrderDetail> orderDetail = _context.OrderDetails
-                     .Where(x => x.OrderId == order.OrderId).ToList();
-                foreach (var o in orderDetail)
-            {
-
-                    //pairs.Add(o.OrderId,)
-
-                    //var purchase = new Purchase()
-                    //{
-                    //    OrderId=order.OrderId,
-                    //    OrderDate=order.OrderDate,
-                    //    ShippedDate=order.ShippedDate,
-                    //    ProductImage= 
-                    //}
-                    //purchases.Add(o);
-                }
-
-            }
-
-            }
-        public class Purchase{
-            public int OrderId { get; set;}
-            public DateTime OrderDate { get; set;}
-            public DateTime ShippedDate { get; set;}
-            public string ProductImage { get; set;}
         }
     }
    
