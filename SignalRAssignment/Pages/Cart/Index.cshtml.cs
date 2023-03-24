@@ -79,6 +79,9 @@ namespace SignalRAssignment.Pages.Cart
                     break;
 
             }
+            ViewData["listItem"] = cartCRUD.GetCart().CartItems;
+            ViewData["count"] = cartCRUD.GetCart().Count;
+            ViewData["Cart"] = cartCRUD.GetCart();
             ViewData["IsLogged"] = isLogged;
             ViewData["listItem"] = cartCRUD.GetCart().CartItems;
             ViewData["count"] = cartCRUD.GetCart().Count;
