@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using SignalRAssignment.Hubs;
+using Q2.Hubs;
 using SignalRAssignment.Common;
 using SignalRAssignment.Models;
 

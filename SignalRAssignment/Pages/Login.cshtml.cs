@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
-using SignalRAssignment.Hubs;
+using Q2.Hubs;
 using SignalRAssignment.Common;
 using SignalRAssignment.Models;
 

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using SignalRAssignment.Hubs;
+using Q2.Hubs;
 using SignalRAssignment.Models;
 
 var builder = WebApplication.CreateBuilder(args);
