@@ -56,11 +56,6 @@ namespace SignalRAssignment.Pages.Cart
         {
             cartCRUD = new CartCRUD(_context, HttpContext.Session);
             bool isLogged = false;
-            Console.WriteLine(value: "Size: "+cartCRUD.GetCart().CartItems.Count);
-            ViewData["listItem"] = cartCRUD.GetCart().CartItems;
-            ViewData["count"] = cartCRUD.GetCart().Count;
-            ViewData["Cart"] = cartCRUD.GetCart();
-
             if (VaSession.Get<Models.Account>(HttpContext.Session, "Account") != null)
             {
                 isLogged = true;
@@ -84,6 +79,9 @@ namespace SignalRAssignment.Pages.Cart
                     break;
 
             }
+            ViewData["listItem"] = cartCRUD.GetCart().CartItems;
+            ViewData["count"] = cartCRUD.GetCart().Count;
+            ViewData["Cart"] = cartCRUD.GetCart();
             ViewData["IsLogged"] = isLogged;
 
         }

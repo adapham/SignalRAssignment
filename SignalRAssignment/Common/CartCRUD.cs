@@ -111,7 +111,9 @@ namespace SignalRAssignment.Common
                 cartItem.Quantity = cartItem.Quantity + 1;
             }
             if(isRemove){
+                if(cartItem.Quantity>1)
                 cartItem.Quantity = cartItem.Quantity - 1;
+               
             }
             if(!isAdd && !isRemove){
                 cartItem.Quantity = quantity;

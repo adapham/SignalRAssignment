@@ -1,80 +1,45 @@
 ﻿@page
-@model SignalRAssignment.Pages_Profile.IndexModel
-
+@model SignalRAssignment.Purchase.IndexModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Purchase";
 }
-<div>
-    <section style="background-color: #eee;">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col">
-                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a asp-area="" asp-page="/Index">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
 
-            <div class="row">   
-                <div class="col-lg-4">
-                    <div class="card mb-4">
-                        <div class="card-body text-center">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
-                                 class="rounded-circle img-fluid" style="width: 150px;">
-                            <h5 class="my-3">@Html.DisplayFor(model => model.Account.UserName)</h5>
-                            <p class="text-muted mb-1">@Html.DisplayFor(model => model.Account.FullName)</p>
-                            <div class="d-flex justify-content-center mb-2">
-                                <a class="btn btn-primary" asp-page="./Edit">Edit</a> 
-                                <a class="btn btn-outline-primary ms-1" asp-area="" asp-page="/Index">Back to List</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Full Name</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">@Html.DisplayFor(model => model.Account.FullName)</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">UserName</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">@Html.DisplayFor(model => model.Account.UserName)</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Password</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">@Html.DisplayFor(model => model.Account.Password)</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Type</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">@Html.DisplayFor(model => model.Account.Type)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
+<h1>Purchase</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order[0].ShippedDate)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Order)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShippedDate)
+                </td>               
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.OrderId" class="btn btn-info">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
